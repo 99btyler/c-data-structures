@@ -1,2 +1,8 @@
 # c-data-structures
-Data structures in C
+...
+
+# Getting Started
+Get this project set up locally
+### Setting up
+* Clone this repository
+* Using a text editor, open (repository)/src
