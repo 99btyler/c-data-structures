@@ -115,6 +115,38 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+void removeData(int data, struct Node **firstNode) {
+
+    if ((*firstNode)->data == data) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        *firstNode = nodeToFree->nextNode;
+        free(nodeToFree);
+
+    } else {
+
+        struct Node *preDataNode = *firstNode;
+        while (preDataNode->nextNode != NULL) {
+            if (preDataNode->nextNode->data == data) {
+
+                struct Node *nodeToFree = preDataNode->nextNode;
+
+                preDataNode->nextNode = nodeToFree->nextNode;
+                free(nodeToFree);
+
+                break;
+
+            }
+            preDataNode = preDataNode->nextNode;
+        }
+
+    }
+
+    printSinglyLinkedList(*firstNode);
+
+}
+
 bool contains(int data, struct Node **firstNode) {
 
     struct Node *dataNode = *firstNode;
@@ -155,9 +187,10 @@ int main() {
     add(3, &firstNode);
     printf("Index of data 3: %d\n", indexOf(3, &firstNode));
     printf("Contains 7: %d\n", contains(7, &firstNode));
-    printf("Size: %d\n", size(&firstNode));
-    printf("Data at index 1: %d\n", get(1, &firstNode));
     insert(2, 1, &firstNode);
+    printf("Size: %d\n", size(&firstNode));
+    removeData(3, &firstNode);
+    printf("Data at index 1: %d\n", get(1, &firstNode));
 
     return 0;
 
