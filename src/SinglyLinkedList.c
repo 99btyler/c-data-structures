@@ -181,6 +181,24 @@ void removeIndex(int index, struct Node **firstNode) {
 
 }
 
+void clear(struct Node **firstNode) {
+
+    struct Node *nodeToFree = *firstNode;
+    while (nodeToFree != NULL) {
+
+        struct Node *nextNode = nodeToFree->nextNode;
+
+        free(nodeToFree);
+        nodeToFree = nextNode;
+
+    }
+
+    *firstNode = NULL;
+
+    printSinglyLinkedList(*firstNode);
+
+}
+
 bool contains(int data, struct Node **firstNode) {
 
     struct Node *dataNode = *firstNode;
@@ -226,6 +244,7 @@ int main() {
     removeData(3, &firstNode);
     printf("Data at index 1: %d\n", get(1, &firstNode));
     removeIndex(1, &firstNode);
+    clear(&firstNode);
 
     return 0;
 
