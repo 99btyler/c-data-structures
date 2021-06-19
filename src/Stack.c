@@ -18,7 +18,9 @@ void printStack(struct Node *node) {
 }
 
 int peek(struct Node **firstNode) {
+
     return (*firstNode != NULL ? (*firstNode)->data : -1);
+    
 }
 
 void push(int data, struct Node **firstNode) {

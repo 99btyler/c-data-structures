@@ -18,7 +18,9 @@ void printQueue(struct Node *node) {
 }
 
 int peek(struct Node **firstNode) {
+
     return (*firstNode != NULL ? (*firstNode)->data : -1);
+    
 }
 
 void add(int data, struct Node **firstNode) {
