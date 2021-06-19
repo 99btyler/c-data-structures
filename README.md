@@ -25,3 +25,8 @@ What is included
   * clear()
   * contains(int data)
   * size()
+* Stack
+  * peek()
+  * push(int data)
+  * pop()
+  * clear()
