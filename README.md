@@ -10,6 +10,11 @@ Get this project set up locally
 # More Info
 What is included
 
+* Queue
+  * peek()
+  * add(int data)
+  * pop()
+  * clear()
 * SinglyLinkedList
   * get(int index)
   * indexOf(int data)
