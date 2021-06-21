@@ -20,6 +20,42 @@ void printDoublyLinkedList(struct Node *node) {
 
 }
 
+int get(int index, struct Node **firstNode) {
+
+    struct Node *indexNode = *firstNode;
+    int i = 0;
+    while (indexNode != NULL) {
+        if (i == index) {
+
+            return indexNode->data;
+
+        }
+        indexNode = indexNode->nextNode;
+        i += 1;
+    }
+
+    return -1;
+
+}
+
+int indexOf(int data, struct Node **firstNode) {
+
+    struct Node *dataNode = *firstNode;
+    int i = 0;
+    while (dataNode != NULL) {
+        if (dataNode->data == data) {
+
+            return i;
+
+        }
+        dataNode = dataNode->nextNode;
+        i += 1;
+    }
+
+    return -1;
+
+}
+
 void add(int data, struct Node **firstNode) {
 
     struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -55,6 +91,8 @@ int main() {
 
     add(17, &firstNode);
     add(19, &firstNode);
+    printf("Data at index 1: %d\n", get(1, &firstNode));
+    printf("Index of data 18: %d\n", indexOf(18, &firstNode));
 
     return 0;
 
