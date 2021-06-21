@@ -83,6 +83,48 @@ void add(int data, struct Node **firstNode) {
 
 }
 
+void insert(int data, int index, struct Node **firstNode) {
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->nextNode = NULL;
+    newNode->previousNode = NULL;
+
+    if (index == 0) {
+
+        newNode->nextNode = *firstNode;
+        (*firstNode)->previousNode = newNode;
+
+        *firstNode = newNode;
+
+    } else {
+
+        struct Node *indexNode = *firstNode;
+        int i = 0;
+        while (indexNode != NULL) {
+            if (i == index) {
+
+                struct Node *preIndexNode = indexNode->previousNode;
+
+                preIndexNode->nextNode = newNode;
+                newNode->previousNode = preIndexNode;
+
+                newNode->nextNode = indexNode;
+                indexNode->previousNode = newNode;
+
+                break;
+
+            }
+            indexNode = indexNode->nextNode;
+            i += 1;
+        }
+
+    }
+
+    printDoublyLinkedList(*firstNode);
+
+}
+
 int main() {
 
     printf("\nDoublyLinkedList\n");
@@ -92,6 +134,7 @@ int main() {
     add(17, &firstNode);
     add(19, &firstNode);
     printf("Data at index 1: %d\n", get(1, &firstNode));
+    insert(18, 1, &firstNode);
     printf("Index of data 18: %d\n", indexOf(18, &firstNode));
 
     return 0;
