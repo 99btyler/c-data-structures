@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -125,6 +126,36 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+bool contains(int data, struct Node **firstNode) {
+
+    struct Node *dataNode = *firstNode;
+    while (dataNode != NULL) {
+        if (dataNode->data == data) {
+
+            return true;
+
+        }
+        dataNode = dataNode->nextNode;
+    }
+
+    return false;
+
+}
+
+int size(struct Node **firstNode) {
+    
+    int size = 0;
+
+    struct Node *node = *firstNode;
+    while (node != NULL) {
+        size += 1;
+        node = node->nextNode;
+    }
+
+    return size;
+
+}
+
 int main() {
 
     printf("\nDoublyLinkedList\n");
@@ -132,6 +163,8 @@ int main() {
     struct Node *firstNode = NULL;
 
     add(17, &firstNode);
+    printf("Contains 17: %d\n", contains(17, &firstNode));
+    printf("Size: %d\n", size(&firstNode));
     add(19, &firstNode);
     printf("Data at index 1: %d\n", get(1, &firstNode));
     insert(18, 1, &firstNode);
