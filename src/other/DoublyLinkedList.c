@@ -126,6 +126,101 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+void removeData(int data, struct Node **firstNode) {
+
+    if ((*firstNode)->data == data) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        *firstNode = nodeToFree->nextNode;
+        (*firstNode)->previousNode = NULL;
+
+        free(nodeToFree);
+
+    } else {
+
+        struct Node *nodeToFree = *firstNode;
+        while (nodeToFree != NULL) {
+            if (nodeToFree->data == data) {
+
+                struct Node *preDataNode = nodeToFree->previousNode;
+                struct Node *postDataNode = nodeToFree->nextNode;
+
+                preDataNode->nextNode = postDataNode;
+                if (postDataNode != NULL) {
+                   postDataNode->previousNode = preDataNode;
+                }
+
+                free(nodeToFree);
+
+                break;
+
+            }
+            nodeToFree = nodeToFree->nextNode;
+        }
+
+    }
+
+    printDoublyLinkedList(*firstNode);
+
+}
+
+void removeIndex(int index, struct Node **firstNode) {
+
+    if (index == 0) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        *firstNode = nodeToFree->nextNode;
+        (*firstNode)->previousNode = NULL;
+
+        free(nodeToFree);
+
+    } else {
+
+        struct Node *nodeToFree = *firstNode;
+        int i = 0;
+        while (nodeToFree != NULL) {
+            if (i == index) {
+
+                struct Node *preIndexNode = nodeToFree->previousNode;
+                struct Node *postIndexNode = nodeToFree->nextNode;
+
+                preIndexNode->nextNode = postIndexNode;
+                postIndexNode->previousNode = preIndexNode;
+
+                free(nodeToFree);
+
+                break;
+
+            }
+            nodeToFree = nodeToFree->nextNode;
+            i += 1;
+        }
+
+    }
+
+    printDoublyLinkedList(*firstNode);
+
+}
+
+void clear(struct Node **firstNode) {
+
+    struct Node *nodeToFree = *firstNode;
+    while (nodeToFree != NULL) {
+
+        struct Node *nextNode = nodeToFree->nextNode;
+
+        free(nodeToFree);
+        nodeToFree = nextNode;
+
+    }
+    *firstNode = NULL;
+
+    printDoublyLinkedList(*firstNode);
+
+}
+
 bool contains(int data, struct Node **firstNode) {
 
     struct Node *dataNode = *firstNode;
@@ -169,6 +264,9 @@ int main() {
     printf("Data at index 1: %d\n", get(1, &firstNode));
     insert(18, 1, &firstNode);
     printf("Index of data 18: %d\n", indexOf(18, &firstNode));
+    removeIndex(indexOf(18, &firstNode), &firstNode);
+    removeData(17, &firstNode);
+    clear(&firstNode);
 
     return 0;
 
