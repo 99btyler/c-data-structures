@@ -9,24 +9,15 @@ struct Node {
 void printCircularSinglyLinkedList(struct Node *firstNode) {
 
     struct Node *node = firstNode;
-
-    if (node == NULL) {
-
-        printf("null\n");
-
-    } else {
-
-        while (node != NULL) {
-            printf("%d{%d} => ", node->data, (node->nextNode == firstNode ? node->nextNode->data : -1));
-            node = node->nextNode;
-            if (node == firstNode) {
-                break;
-            }
+    while (node != NULL) {
+        printf("%d[%d] ", node->data, (node->nextNode != NULL ? node->nextNode->data : -1));
+        node = node->nextNode;
+        if (node == firstNode) {
+            break;
         }
-
-        printf("\n");
-
     }
+
+    printf("...\n");
 
 }
 
@@ -63,8 +54,8 @@ int main() {
 
     struct Node *firstNode = NULL;
 
-    add(2020, &firstNode);
-    add(2022, &firstNode);
+    add(1, &firstNode);
+    add(3, &firstNode);
 
     return 0;
 

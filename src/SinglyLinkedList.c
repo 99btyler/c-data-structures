@@ -10,11 +10,11 @@ struct Node {
 void printSinglyLinkedList(struct Node *node) {
 
     while (node != NULL) {
-        printf("%d => ", node->data);
+        printf("%d[%d] ", node->data, (node->nextNode != NULL ? node->nextNode->data : -1));
         node = node->nextNode;
     }
 
-    printf("null\n");
+    printf("...\n");
 
 }
 
@@ -88,6 +88,7 @@ void insert(int data, int index, struct Node **firstNode) {
     if (index == 0) {
 
         newNode->nextNode = *firstNode;
+
         *firstNode = newNode;
 
     } else {
@@ -121,19 +122,23 @@ void removeData(int data, struct Node **firstNode) {
 
         struct Node *nodeToFree = *firstNode;
 
-        *firstNode = nodeToFree->nextNode;
+        *firstNode = (*firstNode)->nextNode;
+        
         free(nodeToFree);
+        nodeToFree = NULL;
 
     } else {
 
         struct Node *preDataNode = *firstNode;
-        while (preDataNode->nextNode != NULL) {
+        while (preDataNode != NULL) {
             if (preDataNode->nextNode->data == data) {
 
                 struct Node *nodeToFree = preDataNode->nextNode;
 
                 preDataNode->nextNode = nodeToFree->nextNode;
+
                 free(nodeToFree);
+                nodeToFree = NULL;
 
                 break;
 
@@ -154,19 +159,23 @@ void removeIndex(int index, struct Node **firstNode) {
         struct Node *nodeToFree = *firstNode;
 
         *firstNode = nodeToFree->nextNode;
+
         free(nodeToFree);
+        nodeToFree = NULL;
 
     } else {
 
         struct Node *preIndexNode = *firstNode;
         int i = 0;
-        while (preIndexNode->nextNode != NULL) {
+        while (preIndexNode != NULL) {
             if (i == index-1) {
 
                 struct Node *nodeToFree = preIndexNode->nextNode;
 
                 preIndexNode->nextNode = nodeToFree->nextNode;
+
                 free(nodeToFree);
+                nodeToFree = NULL;
                 
                 break;
 
@@ -186,10 +195,12 @@ void clear(struct Node **firstNode) {
     struct Node *nodeToFree = *firstNode;
     while (nodeToFree != NULL) {
 
-        struct Node *nextNode = nodeToFree->nextNode;
+        struct Node *nextNodeToFree = nodeToFree->nextNode;
 
         free(nodeToFree);
-        nodeToFree = nextNode;
+        nodeToFree = NULL;
+
+        nodeToFree = nextNodeToFree;
 
     }
     *firstNode = NULL;
@@ -236,13 +247,12 @@ int main() {
 
     add(1, &firstNode);
     add(3, &firstNode);
-    printf("Index of data 3: %d\n", indexOf(3, &firstNode));
-    printf("Contains 7: %d\n", contains(7, &firstNode));
     insert(2, 1, &firstNode);
-    printf("Size: %d\n", size(&firstNode));
+    printf("Data at index 0: %d\n", get(0, &firstNode));
+    printf("Index of data 3: %d\n", indexOf(3, &firstNode));
     removeData(3, &firstNode);
-    printf("Data at index 1: %d\n", get(1, &firstNode));
-    removeIndex(1, &firstNode);
+    printf("Contains data 3: %d\n", contains(3, &firstNode));
+    removeIndex(0, &firstNode);
     clear(&firstNode);
 
     return 0;

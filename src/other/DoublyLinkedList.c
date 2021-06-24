@@ -10,14 +10,12 @@ struct Node {
 
 void printDoublyLinkedList(struct Node *node) {
 
-    printf("null <=> ");
-
     while (node != NULL) {
-        printf("[%d]%d <=> ", (node->previousNode != NULL ? node->previousNode->data : -1), node->data);
+        printf("[%d]%d[%d] ", (node->previousNode != NULL ? node->previousNode->data : -1), node->data, (node->nextNode != NULL ? node->nextNode->data : -1));
         node = node->nextNode;
     }
 
-    printf("null\n");
+    printf("...\n");
 
 }
 
@@ -136,6 +134,7 @@ void removeData(int data, struct Node **firstNode) {
         (*firstNode)->previousNode = NULL;
 
         free(nodeToFree);
+        nodeToFree = NULL;
 
     } else {
 
@@ -152,6 +151,7 @@ void removeData(int data, struct Node **firstNode) {
                 }
 
                 free(nodeToFree);
+                nodeToFree = NULL;
 
                 break;
 
@@ -175,6 +175,7 @@ void removeIndex(int index, struct Node **firstNode) {
         (*firstNode)->previousNode = NULL;
 
         free(nodeToFree);
+        nodeToFree = NULL;
 
     } else {
 
@@ -187,9 +188,12 @@ void removeIndex(int index, struct Node **firstNode) {
                 struct Node *postIndexNode = nodeToFree->nextNode;
 
                 preIndexNode->nextNode = postIndexNode;
-                postIndexNode->previousNode = preIndexNode;
+                if (postIndexNode != NULL) {
+                    postIndexNode->previousNode = preIndexNode;
+                }
 
                 free(nodeToFree);
+                nodeToFree = NULL;
 
                 break;
 
@@ -209,10 +213,12 @@ void clear(struct Node **firstNode) {
     struct Node *nodeToFree = *firstNode;
     while (nodeToFree != NULL) {
 
-        struct Node *nextNode = nodeToFree->nextNode;
+        struct Node *nextNodeToFree = nodeToFree->nextNode;
 
         free(nodeToFree);
-        nodeToFree = nextNode;
+        nodeToFree = NULL;
+
+        nodeToFree = nextNodeToFree;
 
     }
     *firstNode = NULL;
@@ -257,15 +263,14 @@ int main() {
 
     struct Node *firstNode = NULL;
 
-    add(17, &firstNode);
-    printf("Contains 17: %d\n", contains(17, &firstNode));
-    printf("Size: %d\n", size(&firstNode));
-    add(19, &firstNode);
-    printf("Data at index 1: %d\n", get(1, &firstNode));
-    insert(18, 1, &firstNode);
-    printf("Index of data 18: %d\n", indexOf(18, &firstNode));
-    removeIndex(indexOf(18, &firstNode), &firstNode);
-    removeData(17, &firstNode);
+    add(1, &firstNode);
+    add(3, &firstNode);
+    insert(2, 1, &firstNode);
+    printf("Data at index 0: %d\n", get(0, &firstNode));
+    printf("Index of data 3: %d\n", indexOf(3, &firstNode));
+    removeData(3, &firstNode);
+    printf("Contains data 3: %d\n", contains(3, &firstNode));
+    removeIndex(0, &firstNode);
     clear(&firstNode);
 
     return 0;
