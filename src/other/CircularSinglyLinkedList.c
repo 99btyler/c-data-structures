@@ -48,6 +48,52 @@ void add(int data, struct Node **firstNode) {
 
 }
 
+void insert(int data, int index, struct Node **firstNode) {
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node*));
+    newNode->data = data;
+    newNode->nextNode = NULL;
+
+    if (index == 0) {
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        lastNode->nextNode = newNode;
+        newNode->nextNode = *firstNode;
+
+        *firstNode = newNode;
+
+    } else {
+
+        struct Node *preIndexNode = *firstNode;
+        int i = 0;
+        while (preIndexNode != NULL) {
+            if (i == index-1) {
+
+                struct Node *indexNode = preIndexNode->nextNode;
+
+                preIndexNode->nextNode = newNode;
+                newNode->nextNode = indexNode;
+
+                break;
+
+            }
+            preIndexNode = preIndexNode->nextNode;
+            i += 1;
+            if (preIndexNode == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularSinglyLinkedList(*firstNode);
+
+}
+
 int main() {
 
     printf("\nCircularSinglyLinkedList\n");
@@ -56,6 +102,7 @@ int main() {
 
     add(1, &firstNode);
     add(3, &firstNode);
+    insert(2, 1, &firstNode);
 
     return 0;
 
