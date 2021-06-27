@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -136,6 +137,42 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+bool contains(int data, struct Node **firstNode) {
+
+    struct Node *dataNode = *firstNode;
+    while (dataNode != NULL) {
+        if (dataNode->data == data) {
+
+            return true;
+
+        }
+        dataNode = dataNode->nextNode;
+        if (dataNode == *firstNode) {
+            break;
+        }
+    }
+
+    return false;
+
+}
+
+int size(struct Node **firstNode) {
+
+    int size = 0;
+
+    struct Node *node = *firstNode;
+    while (node != NULL) {
+        size += 1;
+        node = node->nextNode;
+        if (node == *firstNode) {
+            break;
+        }
+    }
+
+    return size;
+
+}
+
 int main() {
 
     printf("\nCircularSinglyLinkedList\n");
@@ -147,6 +184,8 @@ int main() {
     insert(2, 1, &firstNode);
     printf("Data at index 0: %d\n", get(0, &firstNode));
     printf("Index of data 3: %d\n", indexOf(3, &firstNode));
+    printf("Contains data 3: %d\n", contains(3, &firstNode));
+    printf("Size: %d\n", size(&firstNode));
 
     return 0;
 
