@@ -182,10 +182,10 @@ int main() {
     add(1, &firstNode);
     add(3, &firstNode);
     insert(2, 1, &firstNode);
+    printf("Size: %d\n", size(&firstNode));
     printf("Data at index 0: %d\n", get(0, &firstNode));
     printf("Index of data 3: %d\n", indexOf(3, &firstNode));
     printf("Contains data 3: %d\n", contains(3, &firstNode));
-    printf("Size: %d\n", size(&firstNode));
 
     return 0;
 
