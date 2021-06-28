@@ -203,6 +203,7 @@ void clear(struct Node **firstNode) {
         nodeToFree = nextNodeToFree;
 
     }
+    
     *firstNode = NULL;
 
     printSinglyLinkedList(*firstNode);
