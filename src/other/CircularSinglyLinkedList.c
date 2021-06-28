@@ -137,6 +137,121 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+void removeData(int data, struct Node **firstNode) {
+
+    if ((*firstNode)->data == data) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        *firstNode = nodeToFree->nextNode;
+        lastNode->nextNode = *firstNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+    } else {
+
+        struct Node *preDataNode = *firstNode;
+        while (preDataNode != NULL) {
+            if (preDataNode->nextNode->data == data) {
+
+                struct Node *nodeToFree = preDataNode->nextNode;
+
+                preDataNode->nextNode = nodeToFree->nextNode;
+
+                free(nodeToFree);
+                nodeToFree = NULL;
+
+                break;
+
+            }
+            preDataNode = preDataNode->nextNode;
+            if (preDataNode == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularSinglyLinkedList(*firstNode);
+
+}
+
+void removeIndex(int index, struct Node **firstNode) {
+
+    if (index == 0) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        *firstNode = nodeToFree->nextNode;
+        lastNode->nextNode = *firstNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+    } else {
+
+        struct Node *preIndexNode = *firstNode;
+        int i = 0;
+        while (preIndexNode != NULL) {
+            if (i == index-1 && preIndexNode->nextNode != *firstNode) {
+
+                struct Node *nodeToFree = preIndexNode->nextNode;
+
+                preIndexNode->nextNode = nodeToFree->nextNode;
+
+                free(nodeToFree);
+                nodeToFree = NULL;
+
+                break;
+
+            }
+            preIndexNode = preIndexNode->nextNode;
+            i += 1;
+            if (preIndexNode == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularSinglyLinkedList(*firstNode);
+
+}
+
+void clear(struct Node **firstNode) {
+
+    struct Node *nodeToFree = *firstNode;
+    while (nodeToFree != NULL) {
+
+        struct Node *nextNodeToFree = nodeToFree->nextNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+        nodeToFree = nextNodeToFree;
+        if (nodeToFree == *firstNode) {
+            break;
+        }
+
+    }
+
+    *firstNode = NULL;
+
+    printCircularSinglyLinkedList(*firstNode);
+
+}
+
 bool contains(int data, struct Node **firstNode) {
 
     struct Node *dataNode = *firstNode;
@@ -185,7 +300,10 @@ int main() {
     printf("Size: %d\n", size(&firstNode));
     printf("Data at index 0: %d\n", get(0, &firstNode));
     printf("Index of data 3: %d\n", indexOf(3, &firstNode));
+    removeData(3, &firstNode);
     printf("Contains data 3: %d\n", contains(3, &firstNode));
+    removeIndex(0, &firstNode);
+    clear(&firstNode);
 
     return 0;
 
