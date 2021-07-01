@@ -1,5 +1,5 @@
 # c-data-structures
-...
+![c-data-structures gif](https://i.imgur.com/TSmDcvx.gif)
 
 # Getting Started
 Get this project set up locally
