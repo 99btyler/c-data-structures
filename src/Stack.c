@@ -9,11 +9,11 @@ struct Node {
 void printStack(struct Node *node) {
 
     while (node != NULL) {
-        printf("%d => ", node->data);
+        printf("%d[%d] ", node->data, (node->nextNode != NULL ? node->nextNode->data : -1));
         node = node->nextNode;
     }
 
-    printf("null\n");
+    printf("...\n");
 
 }
 
@@ -36,6 +36,7 @@ void push(int data, struct Node **firstNode) {
     } else {
 
         newNode->nextNode = *firstNode;
+
         *firstNode = newNode;
 
     }
@@ -49,10 +50,12 @@ int pop(struct Node **firstNode) {
     if (*firstNode != NULL) {
 
         struct Node *nodeToFree = *firstNode;
-        const int removedData = nodeToFree->data;
 
+        const int removedData = nodeToFree->data;
         *firstNode = nodeToFree->nextNode;
+
         free(nodeToFree);
+        nodeToFree = NULL;
 
         printStack(*firstNode);
 
@@ -72,9 +75,12 @@ void clear(struct Node **firstNode) {
         struct Node *nextNode = nodeToFree->nextNode;
 
         free(nodeToFree);
+        nodeToFree = NULL;
+        
         nodeToFree = nextNode;
 
     }
+
     *firstNode = NULL;
 
     printStack(*firstNode);
@@ -91,7 +97,7 @@ int main() {
     push(2, &firstNode);
     printf("Peek: %d\n", peek(&firstNode));
     push(3, &firstNode);
-    pop(&firstNode);
+    printf("Popped: %d\n", pop(&firstNode));
     clear(&firstNode);
 
     return 0;
