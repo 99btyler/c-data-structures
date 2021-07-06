@@ -22,6 +22,38 @@ void printCircularDoublyLinkedList(struct Node *firstNode) {
 
 }
 
+void add(int data, struct Node **firstNode) {
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->nextNode = NULL;
+    newNode->previousNode = NULL;
+
+    if (*firstNode == NULL) {
+
+        *firstNode = newNode;
+        (*firstNode)->nextNode = newNode;
+        (*firstNode)->previousNode = newNode;
+
+    } else {
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        lastNode->nextNode = newNode;
+        newNode->previousNode = lastNode;
+
+        newNode->nextNode = *firstNode;
+        (*firstNode)->previousNode = newNode;
+
+    }
+
+    printCircularDoublyLinkedList(*firstNode);
+
+}
+
 int main() {
 
     printf("\nCircularDoublyLinkedList\n");
