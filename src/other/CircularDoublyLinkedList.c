@@ -54,6 +54,59 @@ void add(int data, struct Node **firstNode) {
 
 }
 
+void insert(int data, int index, struct Node **firstNode) {
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->nextNode = NULL;
+    newNode->previousNode = NULL;
+
+    if (index == 0) {
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        lastNode->nextNode = newNode;
+        newNode->previousNode = lastNode;
+
+        newNode->nextNode = *firstNode;
+        (*firstNode)->previousNode = newNode;
+
+        *firstNode = newNode;
+
+    } else {
+
+        struct Node *indexNode = *firstNode;
+        int i = 0;
+        while (indexNode != NULL) {
+            if (i == index) {
+
+                struct Node *preIndexNode = indexNode->previousNode;
+
+                preIndexNode->nextNode = newNode;
+                newNode->previousNode = preIndexNode;
+
+                newNode->nextNode = indexNode;
+                indexNode->previousNode = newNode;
+
+                break;
+
+            }
+            indexNode = indexNode->nextNode;
+            i += 1;
+            if (indexNode == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularDoublyLinkedList(*firstNode);
+
+}
+
 int main() {
 
     printf("\nCircularDoublyLinkedList\n");
@@ -62,6 +115,7 @@ int main() {
     
     add(1, &firstNode);
     add(3, &firstNode);
+    insert(2, 1, &firstNode);
 
     return 0;
 
