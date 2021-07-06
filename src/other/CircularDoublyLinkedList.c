@@ -150,6 +150,129 @@ void insert(int data, int index, struct Node **firstNode) {
 
 }
 
+void removeData(int data, struct Node **firstNode) {
+
+    if ((*firstNode)->data == data) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        *firstNode = nodeToFree->nextNode;
+
+        lastNode->nextNode = *firstNode;
+        (*firstNode)->previousNode = lastNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+    } else {
+
+        struct Node *nodeToFree = *firstNode;
+        while (nodeToFree != NULL) {
+            if (nodeToFree->data == data) {
+
+                struct Node *preDataNode = nodeToFree->previousNode;
+                struct Node *postDataNode = nodeToFree->nextNode;
+
+                preDataNode->nextNode = postDataNode;
+                postDataNode->previousNode = preDataNode;
+
+                free(nodeToFree);
+                nodeToFree = NULL;
+
+                break;
+
+            }
+            nodeToFree = nodeToFree->nextNode;
+            if (nodeToFree == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularDoublyLinkedList(*firstNode);
+
+}
+
+void removeIndex(int index, struct Node **firstNode) {
+
+    if (index == 0) {
+
+        struct Node *nodeToFree = *firstNode;
+
+        struct Node *lastNode = *firstNode;
+        while (lastNode->nextNode != *firstNode) {
+            lastNode = lastNode->nextNode;
+        }
+
+        *firstNode = nodeToFree->nextNode;
+
+        lastNode->nextNode = *firstNode;
+        (*firstNode)->previousNode = lastNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+    } else {
+
+        struct Node *nodeToFree = *firstNode;
+        int i = 0;
+        while (nodeToFree != NULL) {
+            if (i == index) {
+
+                struct Node *preIndexNode = nodeToFree->previousNode;
+                struct Node *postIndexNode = nodeToFree->nextNode;
+
+                preIndexNode->nextNode = postIndexNode;
+                postIndexNode->previousNode = preIndexNode;
+
+                free(nodeToFree);
+                nodeToFree = NULL;
+
+                break;
+
+            }
+            nodeToFree = nodeToFree->nextNode;
+            i += 1;
+            if (nodeToFree == *firstNode) {
+                break;
+            }
+        }
+
+    }
+
+    printCircularDoublyLinkedList(*firstNode);
+
+}
+
+void clear(struct Node **firstNode) {
+
+    struct Node *nodeToFree = *firstNode;
+    while (nodeToFree != NULL) {
+
+        struct Node *nextNodeToFree = nodeToFree->nextNode;
+
+        free(nodeToFree);
+        nodeToFree = NULL;
+
+        nodeToFree = nextNodeToFree;
+        if (nodeToFree == *firstNode) {
+            break;
+        }
+
+    }
+
+    *firstNode = NULL;
+
+    printCircularDoublyLinkedList(*firstNode);
+
+}
+
 bool contains(int data, struct Node **firstNode) {
 
     struct Node *dataNode = *firstNode;
@@ -198,7 +321,10 @@ int main() {
     printf("Size: %d\n", size(&firstNode));
     printf("Data at index 0: %d\n", get(0, &firstNode));
     printf("Index of data 3: %d\n", indexOf(3, &firstNode));
+    removeData(3, &firstNode);
     printf("Contains data 3: %d\n", contains(3, &firstNode));
+    removeIndex(0, &firstNode);
+    clear(&firstNode);
 
     return 0;
 
