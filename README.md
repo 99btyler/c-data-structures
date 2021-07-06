@@ -15,7 +15,7 @@ What is included
   * add(int data)
   * pop()
   * clear()
-* SinglyLinkedList, DoublyLinkedList, CircularSinglyLinkedList
+* SinglyLinkedList, DoublyLinkedList, CircularSinglyLinkedList, CircularDoublyLinkedList
   * get(int index)
   * indexOf(int data)
   * add(int data)
